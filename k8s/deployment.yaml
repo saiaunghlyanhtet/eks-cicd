@@ -15,7 +15,7 @@ spec:
         app: hello-app
     spec:
       nodeSelector:
-        kubernetes.io/hostname: "ip-192-168-27-145.ec2.internal"
+        kubernetes.io/hostname: "ip-192-168-34-80.ec2.internal"
 
       containers:
         - name: hello-app
