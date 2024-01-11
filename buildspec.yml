@@ -23,7 +23,7 @@ phases:
       # Building Docker Image
       - echo "Docker build started on `date`"
       - echo "Building the Docker image..."
-      - docker build --tag $REPOSITORY_URL:$TAG .
+      - docker build --tag $REPOSITORY_URL:hello-service-$TAG .
   post_build:
     commands:
       # Push Docker Image to ECR Repository
