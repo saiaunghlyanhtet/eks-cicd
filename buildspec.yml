@@ -29,8 +29,8 @@ phases:
       # Push Docker Image to ECR Repository
       - echo "Docker build completed on `date`"
       - echo "Pushing the Docker image to ECR Repository"
-      - docker push $REPOSITORY_URL:$TAG
-      - echo "Docker Push to ECR Repository Completed -  $REPOSITORY_URL:$TAG"
+      - docker push $REPOSITORY_URL:hello-service-$TAG
+      - echo "Docker Push to ECR Repository Completed -  $REPOSITORY_URL:hello-service-$TAG"
       # Get AWS Credential using STS Assume Role for kubectl
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"
       - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_ROLE_ARN --role-session-name eks-codebuild --duration-seconds 900)
@@ -46,7 +46,7 @@ phases:
       - kubectl apply -f k8s/
       - echo "All done!!!! Kubernetes changes applied"
       # Create Artifacts which we can use if we want to continue our pipeline for other stages
-      - printf '[{"name":"deployment.yaml","imageUri":"%s"}]' $REPOSITORY_URL:$TAG > build.json
+      - printf '[{"name":"deployment.yaml","imageUri":"%s"}, {"name":"service.yaml"}, {"name":"ingress.yaml"}]' $REPOSITORY_URL:hello-service-$TAG > build.json
 artifacts:
   files:
     - build.json
